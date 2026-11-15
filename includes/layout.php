@@ -103,7 +103,7 @@ function render_footer(array $scripts = []): void
     Cebu Technological University &middot; AP3 Agriculture Information System
 </footer>
 
-<script src="<?= e(url("assets/vendor/bootstrap/bootstrap.bundle.min.js")) ?>"></script>
+<script src="<?= e(url("assets/bootstrap/bootstrap/bootstrap.bundle.min.js")) ?>"></script>
 <script src="<?= e(url('assets/js/app.js')) ?>"></script>
 <?php foreach ($scripts as $s) { echo $s, "\n"; } ?>
 </body>
