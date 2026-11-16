@@ -1,0 +1,142 @@
+erDiagram
+    FARMER ||--o{ FARM : owns
+    FARM ||--o{ PLANTING : has
+    CROP ||--o{ PLANTING : "is planted in"
+    PLANTING ||--o{ HARVEST : yields
+    SOIL_TYPE ||--o{ FARM : classifies
+    IRRIGATION_TYPE ||--o{ FARM : classifies
+    CROP_CATEGORY ||--o{ CROP_TYPE : classifies
+    CROP_TYPE ||--o{ CROP : names
+    SEASON ||--o{ CROP : recommends
+    PLANTING_STATUS ||--o{ PLANTING : describes
+    QUALITY_GRADE ||--o{ HARVEST : grades
+    HARVEST_REMARK ||--o{ HARVEST : describes
+    ROLE ||--o{ APP_USER : assigns
+
+    APP_USER o|--o{ FARMER : created_by
+    APP_USER o|--o{ FARMER : updated_by
+    APP_USER o|--o{ FARM : created_by
+    APP_USER o|--o{ FARM : updated_by
+    APP_USER o|--o{ CROP_TYPE : created_by
+    APP_USER o|--o{ CROP_TYPE : updated_by
+    APP_USER o|--o{ CROP : created_by
+    APP_USER o|--o{ CROP : updated_by
+    APP_USER o|--o{ PLANTING : created_by
+    APP_USER o|--o{ PLANTING : updated_by
+    APP_USER o|--o{ HARVEST : created_by
+    APP_USER o|--o{ HARVEST : updated_by
+
+    FARMER {
+        int farmer_id PK
+        varchar first_name
+        varchar last_name
+        varchar contact_number UK
+        varchar address
+        date date_registered
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    FARM {
+        int farm_id PK
+        int farmer_id FK
+        varchar farm_name
+        varchar location
+        numeric area_hectares
+        smallint soil_type_id FK
+        smallint irrigation_type_id FK
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    CROP_TYPE {
+        int crop_type_id PK
+        varchar crop_name UK
+        smallint category_id FK
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    CROP {
+        int crop_id PK
+        int crop_type_id FK
+        varchar variety
+        int growing_period_days
+        smallint season_id FK
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    PLANTING {
+        int planting_id PK
+        int farm_id FK
+        int crop_id FK
+        date planting_date
+        numeric area_planted
+        numeric seed_quantity
+        date expected_harvest_date
+        smallint status_id FK
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    HARVEST {
+        int harvest_id PK
+        int planting_id FK
+        date harvest_date
+        numeric quantity_kg
+        numeric selling_price_per_kg
+        smallint quality_grade_id FK
+        smallint remark_id FK
+        timestamptz created_at
+        timestamptz updated_at
+        int created_by FK
+        int updated_by FK
+    }
+    SOIL_TYPE {
+        smallint soil_type_id PK
+        varchar soil_type_name UK
+    }
+    IRRIGATION_TYPE {
+        smallint irrigation_type_id PK
+        varchar irrigation_type_name UK
+    }
+    CROP_CATEGORY {
+        smallint category_id PK
+        varchar category_name UK
+    }
+    SEASON {
+        smallint season_id PK
+        varchar season_name UK
+    }
+    PLANTING_STATUS {
+        smallint status_id PK
+        varchar status_name UK
+    }
+    QUALITY_GRADE {
+        smallint quality_grade_id PK
+        varchar grade_name UK
+    }
+    HARVEST_REMARK {
+        smallint remark_id PK
+        varchar remark_description UK
+    }
+    ROLE {
+        smallint role_id PK
+        varchar role_name UK
+    }
+    APP_USER {
+        int user_id PK
+        varchar username UK
+        varchar password_hash
+        varchar full_name
+        smallint role_id FK
+        boolean is_active
+        timestamptz created_at
+        timestamptz updated_at
+    }
